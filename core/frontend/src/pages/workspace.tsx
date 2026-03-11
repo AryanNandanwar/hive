@@ -1338,11 +1338,8 @@ export default function Workspace() {
             // for a single execution as it iterates internally. Use a stable ID so
             // those snapshots collapse into a single bubble instead of rendering as
             // multiple independent replies to the same user message.
-            if (isQueen && (event.type === "client_output_delta" || event.type === "llm_text_delta")) {
-              const eid = event.execution_id ?? "";
-              const nid = event.node_id ?? "queen";
-              const baseId = eid || nid || "queen";
-              chatMsg.id = `queen-stream-${baseId}`;
+            if (isQueen && (event.type === "client_output_delta" || event.type === "llm_text_delta") && event.execution_id) {
+              chatMsg.id = `queen-stream-${event.execution_id}`;
             }
             if (isQueen) chatMsg.role = role;
             upsertChatMessage(agentType, chatMsg);
@@ -2305,7 +2302,7 @@ export default function Workspace() {
 
 
   return (
-    <>
+
     <div className="flex flex-col h-screen bg-background overflow-hidden">
       <TopBar
         tabs={agentTabs}
@@ -2549,6 +2546,6 @@ export default function Workspace() {
         }}
       />
     </div>
-    </>
+
   );
 }
