@@ -1588,9 +1588,6 @@ export default function Workspace() {
             // for a single execution as it iterates internally. Use a stable ID so
             // those snapshots collapse into a single bubble instead of rendering as
             // multiple independent replies to the same user message.
-
-
-
             if (isQueen && (event.type === "client_output_delta" || event.type === "llm_text_delta") && event.execution_id) {
               chatMsg.id = `queen-stream-${event.execution_id}`;
             }
